@@ -1,4 +1,34 @@
+# == Class: gitlab_ci_multi_runner
+#
+# Install gitlab CI multi runner.
+#
+# === Parameters
+#
+# [*user*]
+#   Name of the gitlab CI multi-runner user.
+#   Default: gitlab_ci_multi_runner
+#
+# [*version*]
+#   Gitlab CI multi-runner ackage version to install.
+#   Default: 0.4.2-1 on rhel5 and rhel6-like and 'installed' on others.
+#
+# === Examples
+#
+#  class {'gitlab_ci_multi_runner': }
+#
+#  include '::gitlab_ci_multi_runner'
+#
+# Configuration can be done using Hiera.
 class gitlab_ci_multi_runner (
+    $user = 'gitlab_ci_multi_runner',
+    $version = $::osfamily ? {
+        'redhat' => $::lsbmajdistrelease ? {
+            '/5|6/' => '0.4.2.1',
+            default => 'installed',
+        }
+        'debian' => 'installed',
+        default  => 'There is no spoon',
+    },
 ) {
     $package_manager = $::osfamily ? {
         'redhat'  => 'rpm',
@@ -21,13 +51,7 @@ class gitlab_ci_multi_runner (
             # of an unknown package_manager type.
     }
     
-    $version = $::osfamily ? {
-        'redhat' => '0.4.2-1',
-        'debian' => 'installed',
-        default  => 'There is no spoon',
-    }
 
-    $user = 'gitlab_ci_multi_runner'
 
     # Ensure the gitlab_ci_multi_runner user exists.
     # TODO:  Investigate if this is necessary - the install script may handle this.
