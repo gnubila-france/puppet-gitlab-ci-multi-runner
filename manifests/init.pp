@@ -62,7 +62,7 @@ class gitlab_ci_multi_runner (
             default => '/etc/systemd/system/gitlab-runner.service"',
         },
         default  => '/etc/init.d/gitlab-ci-multi-runner',
-    },
+    }
 
     # Ensure the gitlab_ci_multi_runner user exists.
     # TODO:  Investigate if this is necessary - the install script may handle this.
