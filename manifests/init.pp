@@ -25,7 +25,7 @@ class gitlab_ci_multi_runner (
         'redhat' => $::lsbmajdistrelease ? {
             '/5|6/' => '0.4.2.1',
             default => 'installed',
-        }
+        },
         'debian' => 'installed',
         default  => 'There is no spoon',
     },
