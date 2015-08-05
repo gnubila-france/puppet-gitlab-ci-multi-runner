@@ -64,6 +64,11 @@ class gitlab_ci_multi_runner (
         default  => '/etc/init.d/gitlab-ci-multi-runner',
     }
 
+    $initscriptName = $initscriptLocation ? {
+        '/etc/init.d/gitlab-ci-multi-runner'        => 'gitlab-ci-multi-runner'
+        '/etc/systemd/system/gitlab-runner.service' => 'gitlab-runner'
+    }
+
     # Ensure the gitlab_ci_multi_runner user exists.
     # TODO:  Investigate if this is necessary - the install script may handle this.
     user { $user:
@@ -88,7 +93,7 @@ class gitlab_ci_multi_runner (
         creates  => $initscriptLocation,
     } ->
     # Ensure that the service is running at all times.
-    service { 'gitlab-ci-multi-runner':
+    service { $initscriptName:
         ensure => 'running',
     }
 
