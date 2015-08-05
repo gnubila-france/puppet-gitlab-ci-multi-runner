@@ -65,8 +65,8 @@ class gitlab_ci_multi_runner (
     }
 
     $initscriptName = $initscriptLocation ? {
-        '/etc/init.d/gitlab-ci-multi-runner'        => 'gitlab-ci-multi-runner'
-        '/etc/systemd/system/gitlab-runner.service' => 'gitlab-runner'
+        '/etc/init.d/gitlab-ci-multi-runner'        => 'gitlab-ci-multi-runner',
+        '/etc/systemd/system/gitlab-runner.service' => 'gitlab-runner',
     }
 
     # Ensure the gitlab_ci_multi_runner user exists.
