@@ -52,6 +52,18 @@ class gitlab_ci_multi_runner (
         # package_manager type.
     }
 
+    $initscriptLocation = $::osfamily ? {
+        'redhat' => $::lsbmajdistrelease ? {
+            '/5|6/' => '/etc/init.d/gitlab-ci-multi-runner',
+            default => '/etc/systemd/system/gitlab-runner.service"',
+        },
+        'debian' => $::lsbmajdistrelease ? {
+            '/6|7/' => '/etc/init.d/gitlab-ci-multi-runner',
+            default => '/etc/systemd/system/gitlab-runner.service"',
+        },
+        default  => '/etc/init.d/gitlab-ci-multi-runner',
+    },
+
     # Ensure the gitlab_ci_multi_runner user exists.
     # TODO:  Investigate if this is necessary - the install script may handle this.
     user { $user:
@@ -73,7 +85,7 @@ class gitlab_ci_multi_runner (
         command  => "gitlab-ci-multi-runner install --user $user",
         user     => 'root',
         provider => 'shell',
-        creates  => '/etc/init.d/gitlab-ci-multi-runner'
+        creates  => $initscriptLocation,
     } ->
     # Ensure that the service is running at all times.
     service { 'gitlab-ci-multi-runner':
