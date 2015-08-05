@@ -55,11 +55,11 @@ class gitlab_ci_multi_runner (
     $initscriptLocation = $::osfamily ? {
         'redhat' => $::lsbmajdistrelease ? {
             '/5|6/' => '/etc/init.d/gitlab-ci-multi-runner',
-            default => '/etc/systemd/system/gitlab-runner.service"',
+            default => '/etc/systemd/system/gitlab-runner.service',
         },
         'debian' => $::lsbmajdistrelease ? {
             '/6|7/' => '/etc/init.d/gitlab-ci-multi-runner',
-            default => '/etc/systemd/system/gitlab-runner.service"',
+            default => '/etc/systemd/system/gitlab-runner.service',
         },
         default  => '/etc/init.d/gitlab-ci-multi-runner',
     }
