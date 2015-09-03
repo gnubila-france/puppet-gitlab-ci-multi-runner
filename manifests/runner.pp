@@ -223,7 +223,7 @@ define gitlab_ci_multi_runner::runner (
         command  => "gitlab-ci-multi-runner register ${opts}",
         user     => $user,
         provider => shell,
-        onlyif   => "! grep ${description} ${home_path}/config.toml",
+        onlyif   => "! grep ${description} ${home_path}/.gitlab-runner/config.toml",
         cwd      => $home_path,
         require  => $require,
     }
