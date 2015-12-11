@@ -220,11 +220,11 @@ define gitlab_ci_multi_runner::runner (
     }
 
     if $docker_allowed_images {
-        $docker_allowed_images_opt = "--docker-allowed_images=${docker_allowed_images}"
+        $docker_allowed_images_opt = "--docker-allowed-images=${docker_allowed_images}"
     }
 
     if $docker_allowed_services {
-        $docker_allowed_services_opt = "--docker-allowed_services=${docker_allowed_services}"
+        $docker_allowed_services_opt = "--docker-allowed-services=${docker_allowed_services}"
     }
 
     $docker_opts = "${docker_image_opt} ${docker_privileged_opt} ${docker_mysql_opt} ${docker_postgres_opt} ${docker_redis_opt} ${docker_mongo_opt} ${docker_allowed_images_opt} ${docker_allowed_services_opt}"
