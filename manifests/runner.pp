@@ -220,10 +220,14 @@ define gitlab_ci_multi_runner::runner (
     }
 
     if $docker_allowed_images {
+        fail('Not implemented')
+        # FIXME add one parameter for each member of the $docker_allowed_images array
         $docker_allowed_images_opt = "--docker-allowed-images=${docker_allowed_images}"
     }
 
     if $docker_allowed_services {
+        fail('Not implemented')
+        # FIXME add one parameter for each member of the $docker_allowed_services array
         $docker_allowed_services_opt = "--docker-allowed-services=${docker_allowed_services}"
     }
 
