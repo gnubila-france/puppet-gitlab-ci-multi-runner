@@ -222,7 +222,7 @@ define gitlab_ci_multi_runner::runner (
     if $docker_allowed_images {
         $docker_allowed_images_opt = inline_template(
           "<% @docker_allowed_images.each do |image| -%>
-            --docker-allowed-images='<%= image -%>'
+            --docker-allowed-images=<%= \"'#{image}'\" -%>
             <% end -%>"
         )
     }
@@ -230,7 +230,7 @@ define gitlab_ci_multi_runner::runner (
     if $docker_allowed_services {
         $docker_allowed_services_opt = inline_template(
           "<% @docker_allowed_services.each do |service| -%>
-            --docker-allowed-services='<%= service -%>'
+            --docker-allowed-services=<%= \"'#{service}'\" -%>
             <% end -%>"
         )
     }
