@@ -223,7 +223,7 @@ define gitlab_ci_multi_runner::runner (
         # FIXME add one parameter for each member of the $docker_allowed_images array
         #$docker_allowed_images_opt = "--docker-allowed-images=${docker_allowed_images}"
         $docker_allowed_images_opt = inline_template(
-          "<% docker_allowed_images.each do |image| -%>
+          "<% @docker_allowed_images.each do |image| -%>
             --docker-allowed-images=<%= image -%>
             <% end -%>"
         )
