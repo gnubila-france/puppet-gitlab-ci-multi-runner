@@ -228,13 +228,16 @@ define gitlab_ci_multi_runner::runner (
             <% end -%>"
         )
         notify { "docker_allowed_images_opt: ${docker_allowed_images_opt}": }
-        fail('Not implemented')
     }
 
     if $docker_allowed_services {
-        fail('Not implemented')
         # FIXME add one parameter for each member of the $docker_allowed_services array
-        $docker_allowed_services_opt = "--docker-allowed-services=${docker_allowed_services}"
+        $docker_allowed_services_opt = inline_template(
+          "<% @docker_allowed_services.each do |service| -%>
+            --docker-allowed-services=<%= service -%>
+            <% end -%>"
+        )
+        notify { "docker_allowed_services_opt: ${docker_allowed_services_opt}": }
     }
 
     $docker_opts = "${docker_image_opt} ${docker_privileged_opt} ${docker_mysql_opt} ${docker_postgres_opt} ${docker_redis_opt} ${docker_mongo_opt} ${docker_allowed_images_opt} ${docker_allowed_services_opt}"
