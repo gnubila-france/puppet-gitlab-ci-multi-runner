@@ -220,9 +220,15 @@ define gitlab_ci_multi_runner::runner (
     }
 
     if $docker_allowed_images {
-        fail('Not implemented')
         # FIXME add one parameter for each member of the $docker_allowed_images array
-        $docker_allowed_images_opt = "--docker-allowed-images=${docker_allowed_images}"
+        #$docker_allowed_images_opt = "--docker-allowed-images=${docker_allowed_images}"
+        $docker_allowed_images_opt = inline_template(
+          "<% docker_allowed_images.each do |image| -%>
+            --docker-allowed-images=<%= image -%>
+            <% end -%>"
+        )
+        notify { "docker_allowed_images_opt: ${docker_allowed_images_opt}": }
+        fail('Not implemented')
     }
 
     if $docker_allowed_services {
