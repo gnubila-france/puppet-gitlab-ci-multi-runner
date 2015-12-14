@@ -220,24 +220,21 @@ define gitlab_ci_multi_runner::runner (
     }
 
     if $docker_allowed_images {
-        # FIXME add one parameter for each member of the $docker_allowed_images array
-        #$docker_allowed_images_opt = "--docker-allowed-images=${docker_allowed_images}"
         $docker_allowed_images_opt = inline_template(
           "<% @docker_allowed_images.each do |image| -%>
             --docker-allowed-images=<%= image -%>
             <% end -%>"
         )
-        notify { "docker_allowed_images_opt: ${docker_allowed_images_opt}": }
+        notify { "${title} docker_allowed_images_opt: ${docker_allowed_images_opt}": }
     }
 
     if $docker_allowed_services {
-        # FIXME add one parameter for each member of the $docker_allowed_services array
         $docker_allowed_services_opt = inline_template(
           "<% @docker_allowed_services.each do |service| -%>
             --docker-allowed-services=<%= service -%>
             <% end -%>"
         )
-        notify { "docker_allowed_services_opt: ${docker_allowed_services_opt}": }
+        notify { "${title} docker_allowed_services_opt: ${docker_allowed_services_opt}": }
     }
 
     $docker_opts = "${docker_image_opt} ${docker_privileged_opt} ${docker_mysql_opt} ${docker_postgres_opt} ${docker_redis_opt} ${docker_mongo_opt} ${docker_allowed_images_opt} ${docker_allowed_services_opt}"
