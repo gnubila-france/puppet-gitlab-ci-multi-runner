@@ -222,19 +222,17 @@ define gitlab_ci_multi_runner::runner (
     if $docker_allowed_images {
         $docker_allowed_images_opt = inline_template(
           "<% @docker_allowed_images.each do |image| -%>
-            --docker-allowed-images=<%= image -%>
+            --docker-allowed-images='<%= image -%>'
             <% end -%>"
         )
-        notify { "${title} docker_allowed_images_opt: ${docker_allowed_images_opt}": }
     }
 
     if $docker_allowed_services {
         $docker_allowed_services_opt = inline_template(
           "<% @docker_allowed_services.each do |service| -%>
-            --docker-allowed-services=<%= service -%>
+            --docker-allowed-services='<%= service -%>'
             <% end -%>"
         )
-        notify { "${title} docker_allowed_services_opt: ${docker_allowed_services_opt}": }
     }
 
     $docker_opts = "${docker_image_opt} ${docker_privileged_opt} ${docker_mysql_opt} ${docker_postgres_opt} ${docker_redis_opt} ${docker_mongo_opt} ${docker_allowed_images_opt} ${docker_allowed_services_opt}"
